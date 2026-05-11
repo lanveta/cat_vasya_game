@@ -29,3 +29,38 @@
 - Разные формулы обеспечивают баланс: монстры — более уронные,  персонажи — более живучие и защищённые
 
 Зависимости: math, abc
+
+
+МОДУЛЬ 2
+
+Реализует класс персонажа с ветвлением логики расчёта характеристик в зависимости от класса. Абстрактный базовый класс Unit сохранён без изменений.
+
+Структура:
+
+    Unit (абстрактный класс)
+        - Атрибуты: strength, dexterity, constitution, wisdom, intelligence, charisma
+        - Абстрактные методы: calculate_max_health(), calculate_damage(), calculate_defense()
+
+    Character (наследуется от Unit) — игровой персонаж с классом
+        - Атрибут: character_class ('warrior', 'mage', 'hunter')
+        - Кэшируемые атрибуты: max_health, damage, defense
+    
+        Формулы (общие для всех классов):
+            health = floor(constitution × 10 + strength / 2) — максимальное здоровье персонажа
+        
+        Формулы урона:
+            warrior: floor(strength × 2.2 + constitution / 3) — урон воина
+            mage:    floor(intelligence × 2.5 + wisdom / 2) — урон мага
+            hunter:  floor(dexterity × 1.9 + strength / 3) — урон охотника
+        
+        Формулы защиты:
+            warrior: floor(constitution × 1.8 + strength / 4) — защита воина
+            mage:    floor(wisdom × 1.3 + intelligence / 6) — защита мага
+            hunter:  floor(dexterity × 1.6 + constitution / 5) — защита охотника
+
+Особенности:
+- Используется abc.ABC для обеспечения единого интерфейса
+- В конструкторе сразу вычисляются и кэшируются итоговые характеристики
+- Вся логика ветвления сосредоточена внутри одного класса Character
+
+Зависимости: abc, math
